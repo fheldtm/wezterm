@@ -13,26 +13,24 @@ config.window_decorations = "RESIZE"
 
 -- config
 -- font
--- config.font = wezterm.font('Hack Nerd Font', { weight = 'DemiBold' })
--- config.font = wezterm.font('Fira Code', { weight = 'DemiBold' })
 config.font = wezterm.font_with_fallback {
   { family = "Fira Code",      weight = "DemiBold" },
   { family = "Hack Nerd Font", weight = "DemiBold" },
   { family = "D2Coding",       weight = "DemiBold" }
 }
-config.font_size = 9
+config.font_size = 9 * 1.5
 
 -- color scheme
 config.background = {
   {
     source = {
-      File = "C:/Users/fheld/wallpaper/wallpaper-bg.png"
+      File = wezterm.home_dir .. "/.config/wezterm/wallpaper/wallpaper-bg.png"
     },
     opacity = 1,
   },
   {
     source = {
-      File = "C:/Users/fheld/wallpaper/wallpaper-01.png"
+      File = wezterm.home_dir .. "/.config/wezterm/wallpaper/wallpaper-01.png"
     },
     opacity = 0.15
   },
@@ -71,16 +69,16 @@ config.keys = {
   { key = "v",          mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 
   -- move pane
-  { key = "h",          mods = "CTRL",   action = act.ActivatePaneDirection("Left") },
-  { key = "j",          mods = "CTRL",   action = act.ActivatePaneDirection("Down") },
-  { key = "k",          mods = "CTRL",   action = act.ActivatePaneDirection("Up") },
-  { key = "l",          mods = "CTRL",   action = act.ActivatePaneDirection("Right") },
+  { key = "h",          mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+  { key = "j",          mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  { key = "k",          mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+  { key = "l",          mods = "LEADER", action = act.ActivatePaneDirection("Right") },
 
   -- resize pene
-  { key = "LeftArrow",  mods = "CTRL",   action = act.AdjustPaneSize({ "Left", 1 }) },
-  { key = "DownArrow",  mods = "CTRL",   action = act.AdjustPaneSize({ "Down", 1 }) },
-  { key = "UpArrow",    mods = "CTRL",   action = act.AdjustPaneSize({ "Up", 1 }) },
-  { key = "RightArrow", mods = "CTRL",   action = act.AdjustPaneSize({ "Right", 1 }) },
+  { key = "LeftArrow",  mods = "LEADER", action = act.AdjustPaneSize({ "Left", 5 }) },
+  { key = "DownArrow",  mods = "LEADER", action = act.AdjustPaneSize({ "Down", 5 }) },
+  { key = "UpArrow",    mods = "LEADER", action = act.AdjustPaneSize({ "Up", 5 }) },
+  { key = "RightArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Right", 5 }) },
 
   -- focus pane
   { key = "w",          mods = "LEADER", action = act.PaneSelect },
@@ -88,7 +86,9 @@ config.keys = {
 
 -- change config now
 -- config.default_domain = 'powershell'
-config.default_prog = { 'pwsh.exe', '-NoLogo' }
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+  config.default_prog = { 'pwsh.exe', '-NoLogo' }
+end
 
 -- startup gui size and position
 -- wezterm.on('gui-startup', function(cmd)
